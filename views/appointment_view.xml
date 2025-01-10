@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Create a Tree view for the 'hospital.appointment' model -->
+    <record id="view_hospital_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Patient Information Group -->
+                <field name="patient_id"/>
+                <field name="appointment_date"/>
+                <field name="booking_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Create a form view for the 'hospital.appointment' model -->
+    <record id="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Patient Form">
+                <sheet>
+                    <group>
+                        <!-- Personal Information Group -->
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="gender"/>
+                            <field name="age"/>
+                        </group>
+
+                        <!-- Medical Information Group -->
+                        <group>
+                            <field name="appointment_date"/>
+                            <field name="booking_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Create a search view for the 'hospital.appointment' model -->
+    <record id="view_hospital_appointment_search" model="ir.ui.view">
+        <field name="name">hospital.appointment.search</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Personal Information Group -->
+            </search>
+        </field>
+    </record>
+
+    <!-- Action: Open the Patient records -->
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>
+                Create your first appointment!
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_appointment"
+              name="Appointments"
+              parent="menu_appointments_master"
+              action="action_hospital_appointment"
+              sequence="10"/>
+</odoo>
