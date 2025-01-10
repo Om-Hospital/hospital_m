@@ -32,10 +32,23 @@
 
                         <!-- Medical Information Group -->
                         <group>
+                            <field name="ref"/>
                             <field name="appointment_date"/>
                             <field name="booking_date"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Appointment" name="appointment">
+                            <group>
+                                <field name="prescription"/>
+                            </group>
+                        </page>
+                        <page string="Pharmacy" name="pharmacy">
+                            <group>
+                                <field name="ref"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" groups="base.group_user"/>
