@@ -22,7 +22,6 @@ class HospitalPatient(models.Model):
 
     @api.depends('date_of_birth')
     def _compute_age(self):
-        print("self...", self)
         for rec in self:
             today = date.today()
             if rec.date_of_birth:

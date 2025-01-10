@@ -6,11 +6,20 @@
         <field name="name">hospital.appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-success="state == 'done'"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'in_consultation'"
+                  decoration-danger="state == 'cancel'">
+
                 <!-- Patient Information Group -->
                 <field name="patient_id"/>
                 <field name="appointment_date"/>
                 <field name="booking_date"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'in_consultation'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancel'"/>
             </tree>
         </field>
     </record>
@@ -21,7 +30,16 @@
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
             <form string="Patient Form">
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}"
+                           statusbar_visible="draft,in_consultation,done"/>
+                </header>
                 <sheet>
+                    <div>
+                        <h1>
+                            <field name="priority" widget="priority"/>
+                        </h1>
+                    </div>
                     <group>
                         <!-- Personal Information Group -->
                         <group>
@@ -34,7 +52,15 @@
                         <group>
                             <field name="ref"/>
                             <field name="appointment_date"/>
-                            <field name="booking_date"/>
+                            <field name="booking_date" help="Date of appointment booking records"/>
+                            <button name="action_test" string="Object" type="object"
+                                    help="A Message will be printed in the log !"
+                                    confirm="Are you sure to execute the python code ?"
+                                    class="oe_highlight"/>
+                            <button name="%(om_hospital.action_hospital_patient)d" string="Action"
+                                    help="On clicking this button, you will be redirecting patient records."
+                                    confirm="Are you sure to open the patient action ?"
+                                    type="action" class="oe_highlight"/>
                         </group>
                     </group>
                     <notebook>
