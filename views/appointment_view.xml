@@ -9,13 +9,26 @@
             <tree decoration-success="state == 'done'"
                   decoration-info="state == 'draft'"
                   decoration-warning="state == 'in_consultation'"
-                  decoration-danger="state == 'cancel'">
+                  decoration-danger="state == 'cancel'"
+                  sample="1"
+                  multi_edit="1">
 
                 <!-- Patient Information Group -->
                 <field name="patient_id"/>
+                <field name="ref"
+                       optional="hide"/>
+                <field name="gender"
+                       optional="hide"/>
+                <field name="doctor_id"
+                       optional="show"
+                       widget="many2one_avatar_user"/>
                 <field name="appointment_date"/>
-                <field name="booking_date"/>
-                <field name="state" widget="badge"
+                <field name="booking_date"
+                       optional="show"/>
+                <field name="activity_ids"
+                       widget="list_activity"/>
+                <field name="state"
+                       widget="badge"
                        decoration-info="state == 'draft'"
                        decoration-warning="state == 'in_consultation'"
                        decoration-success="state == 'done'"
@@ -31,13 +44,34 @@
         <field name="arch" type="xml">
             <form string="Patient Form">
                 <header>
-                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}"
+                    <button name="action_in_consultant"
+                            string="In Consultant"
+                            class="oe_highlight"
+                            type="object"
+                            data-hotkey="s"/>
+                    <button name="action_done"
+                            string="Mark as Done"
+                            class="oe_highlight"
+                            type="object"
+                            data-hotkey="r"/>
+                    <button name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            data-hotkey="z"/>
+                    <button name="action_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            data-hotkey="u"/>
+
+                    <field name="state" widget="statusbar"
+                           nolabel="1" options="{'clickable': '1'}"
                            statusbar_visible="draft,in_consultation,done"/>
                 </header>
                 <sheet>
                     <div>
                         <h1>
-                            <field name="priority" widget="priority"/>
+                            <field name="priority"
+                                   widget="priority"/>
                         </h1>
                     </div>
                     <group>
@@ -46,18 +80,23 @@
                             <field name="patient_id"/>
                             <field name="gender"/>
                             <field name="age"/>
+                            <field name="doctor_id"/>
                         </group>
 
                         <!-- Medical Information Group -->
                         <group>
                             <field name="ref"/>
                             <field name="appointment_date"/>
-                            <field name="booking_date" help="Date of appointment booking records"/>
-                            <button name="action_test" string="Object" type="object"
+                            <field name="booking_date"
+                                   help="Date of appointment booking records"
+                                   default_focus="1"/>
+                            <button name="action_test" string="Object"
+                                    type="object"
                                     help="A Message will be printed in the log !"
                                     confirm="Are you sure to execute the python code ?"
                                     class="oe_highlight"/>
-                            <button name="%(om_hospital.action_hospital_patient)d" string="Action"
+                            <button name="%(om_hospital.action_hospital_patient)d"
+                                    string="Action"
                                     help="On clicking this button, you will be redirecting patient records."
                                     confirm="Are you sure to open the patient action ?"
                                     type="action" class="oe_highlight"/>
@@ -66,7 +105,9 @@
                     <notebook>
                         <page string="Appointment" name="appointment">
                             <group>
-                                <field name="prescription"/>
+                                <field name="prescription"
+                                       placeholder="Enter your prescription."
+                                       options="{'collaborative' : true, 'resizable' : true}"/>
                             </group>
                         </page>
                         <page string="Pharmacy" name="pharmacy">
@@ -77,7 +118,8 @@
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_follower_ids"
+                           groups="base.group_user"/>
                     <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>

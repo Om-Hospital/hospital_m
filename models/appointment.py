@@ -30,9 +30,9 @@ class HospitalAppointment(models.Model):
         ("done", "Done"),
         ("cancel", "Cancel")
     ], string="Status", default="draft", required=True)
+    doctor_id = fields.Many2one('res.users', string='Doctor')
 
-
-    #---- single onchange in one function
+    # ---- single onchange in one function
     # @api.onchange('age')
     # def onchange_age(self):
     #     self.age = self.patient_id.age
@@ -52,5 +52,18 @@ class HospitalAppointment(models.Model):
             }
         }
 
+    def action_in_consultant(self):
+        for rec in self:
+            rec.state = "in_consultation"
 
+    def action_done(self):
+        for rec in self:
+            rec.state = "done"
 
+    def action_cancel(self):
+        for rec in self:
+            rec.state = "cancel"
+
+    def action_draft(self):
+        for rec in self:
+            rec.state = "draft"
