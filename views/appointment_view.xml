@@ -48,20 +48,26 @@
                             string="In Consultant"
                             class="oe_highlight"
                             type="object"
-                            data-hotkey="s"/>
+                            data-hotkey="s"
+                            invisible="state != 'draft'"/>
                     <button name="action_done"
                             string="Mark as Done"
-                            class="oe_highlight"
+                            class="btn-success"
                             type="object"
-                            data-hotkey="r"/>
+                            data-hotkey="r"
+                            invisible="state != 'in_consultation', 'draft'"/>
                     <button name="action_cancel"
                             string="Cancel"
+                            class="btn-danger"
                             type="object"
-                            data-hotkey="z"/>
+                            data-hotkey="z"
+                            invisible="state != 'done'"/>
                     <button name="action_draft"
                             string="Reset to Draft"
+                            class="btn-info"
                             type="object"
-                            data-hotkey="u"/>
+                            data-hotkey="u"
+                            invisible="state != 'cancel'"/>
 
                     <field name="state" widget="statusbar"
                            nolabel="1" options="{'clickable': '1'}"
