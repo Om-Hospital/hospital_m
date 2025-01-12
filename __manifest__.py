@@ -7,7 +7,7 @@
     'summary': 'Manage patient records in the hospital system.',
     'author': 'MD. Sabbir Hossain',
     'website': 'https://www.xsellencebdltd.com',
-    'depends': ['base','mail'],  # Dependencies, base is always needed
+    'depends': ['base','mail','product'],  # Dependencies, base is always needed
     'data': [
         'security/ir.model.access.csv',
         'views/menu.xml',

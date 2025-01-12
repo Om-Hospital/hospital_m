@@ -117,9 +117,21 @@
                             </group>
                         </page>
                         <page string="Pharmacy" name="pharmacy">
-                            <group>
-                                <field name="ref"/>
-                            </group>
+                            <field name="pharmacy_lines_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="price_unit"/>
+                                    <field name="qty"/>
+<!--                                    <field name="ttl_price"/>-->
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="product_id"/>
+                                        <field name="price_unit"/>
+                                        <field name="qty"/>
+                                    </group>
+                                </form>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
