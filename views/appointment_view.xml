@@ -3,9 +3,13 @@
 
     <!-- Create a Tree view for the 'hospital.appointment' model -->
     <record id="view_hospital_appointment_tree" model="ir.ui.view">
+
         <field name="name">hospital.appointment.tree</field>
+
         <field name="model">hospital.appointment</field>
+
         <field name="arch" type="xml">
+
             <tree decoration-success="state == 'done'"
                   decoration-info="state == 'draft'"
                   decoration-warning="state == 'in_consultation'"
@@ -15,18 +19,24 @@
 
                 <!-- Patient Information Group -->
                 <field name="patient_id"/>
+
                 <field name="ref"
                        optional="hide"/>
+
                 <field name="gender"
                        optional="hide"/>
+
                 <field name="doctor_id"
                        optional="show"
                        widget="many2one_avatar_user"/>
                 <field name="appointment_date"/>
+
                 <field name="booking_date"
                        optional="show"/>
+
                 <field name="activity_ids"
                        widget="list_activity"/>
+
                 <field name="state"
                        widget="badge"
                        decoration-info="state == 'draft'"
@@ -34,6 +44,7 @@
                        decoration-success="state == 'done'"
                        decoration-danger="state == 'cancel'"/>
             </tree>
+
         </field>
     </record>
 
@@ -42,6 +53,7 @@
         <field name="name">hospital.appointment.form</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
+
             <form string="Patient Form">
                 <header>
                     <button name="action_in_consultant"
@@ -50,18 +62,21 @@
                             type="object"
                             data-hotkey="s"
                             invisible="state != 'draft'"/>
+
                     <button name="action_done"
                             string="Mark as Done"
                             class="btn-success"
                             type="object"
                             data-hotkey="r"
                             invisible="state != 'in_consultation', 'draft'"/>
+
                     <button name="action_cancel"
                             string="Cancel"
                             class="btn-danger"
                             type="object"
                             data-hotkey="z"
                             invisible="state != 'done'"/>
+
                     <button name="action_draft"
                             string="Reset to Draft"
                             class="btn-info"
@@ -72,14 +87,17 @@
                     <field name="state" widget="statusbar"
                            nolabel="1" options="{'clickable': '1'}"
                            statusbar_visible="draft,in_consultation,done"/>
+
                 </header>
                 <sheet>
+
                     <div>
                         <h1>
                             <field name="priority"
                                    widget="priority"/>
                         </h1>
                     </div>
+
                     <group>
                         <!-- Personal Information Group -->
                         <group>
@@ -87,20 +105,25 @@
                             <field name="gender"/>
                             <field name="age"/>
                             <field name="doctor_id"/>
+                            <field name="hide_sales_price"/>
                         </group>
 
                         <!-- Medical Information Group -->
                         <group>
                             <field name="ref"/>
+
                             <field name="appointment_date"/>
+
                             <field name="booking_date"
                                    help="Date of appointment booking records"
                                    default_focus="1"/>
+
                             <button name="action_test" string="Object"
                                     type="object"
                                     help="A Message will be printed in the log !"
                                     confirm="Are you sure to execute the python code ?"
                                     class="oe_highlight"/>
+
                             <button name="%(om_hospital.action_hospital_patient)d"
                                     string="Action"
                                     help="On clicking this button, you will be redirecting patient records."
@@ -108,6 +131,8 @@
                                     type="action" class="oe_highlight"/>
                         </group>
                     </group>
+
+                    <!--                    Notebook starts here-->
                     <notebook>
                         <page string="Appointment" name="appointment">
                             <group>
@@ -116,45 +141,77 @@
                                        options="{'collaborative' : true, 'resizable' : true}"/>
                             </group>
                         </page>
+
                         <page string="Pharmacy" name="pharmacy">
-                            <group>
-                                <field name="ref"/>
-                            </group>
+                            <field name="pharmacy_lines_ids">
+
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="price_unit"
+                                           attrs="{'column_invisible': [('parent.hide_sales_price', '=', True)]}"/>
+                                    <field name="qty"/>
+                                    <!--                                    <field name="ttl_price"/>-->
+                                </tree>
+
+                                <form>
+                                    <group>
+                                        <field name="product_id"/>
+                                        <field name="price_unit"
+                                               attrs="{'column_invisible': [('parent.hide_sales_price', '=', True)]}"/>
+                                        <field name="qty"/>
+                                    </group>
+                                </form>
+
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
+
                 <div class="oe_chatter">
                     <field name="message_follower_ids"
                            groups="base.group_user"/>
                     <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>
+
             </form>
         </field>
     </record>
 
     <!-- Create a search view for the 'hospital.appointment' model -->
     <record id="view_hospital_appointment_search" model="ir.ui.view">
+
         <field name="name">hospital.appointment.search</field>
+
         <field name="model">hospital.appointment</field>
+
         <field name="arch" type="xml">
             <search>
                 <!-- Personal Information Group -->
             </search>
         </field>
+
     </record>
 
     <!-- Action: Open the Patient records -->
     <record id="action_hospital_appointment" model="ir.actions.act_window">
+
         <field name="name">Appointment</field>
+
         <field name="type">ir.actions.act_window</field>
+
         <field name="res_model">hospital.appointment</field>
+
         <field name="view_mode">tree,form</field>
+
         <field name="context">{}</field>
+
         <field name="help" type="html">
+
             <p>
                 Create your first appointments here!
             </p>
+
         </field>
     </record>
     <menuitem id="menu_appointment"
@@ -162,4 +219,5 @@
               parent="menu_appointments_master"
               action="action_hospital_appointment"
               sequence="10"/>
+
 </odoo>
