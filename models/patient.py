@@ -15,7 +15,11 @@ class HospitalPatient(models.Model):
     ref = fields.Char(string='Reference')
     age = fields.Integer(string='Age', compute='_compute_age', tracking=True)
     date_of_birth = fields.Date(string='Date Of Birth')
-    gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string='Gender', tracking=True, default='male')
+
+    gender = fields.Selection([('male', 'Male'), ('female', 'Female')],
+                              string='Gender', tracking=True,
+                              default='male')
+
     medical_history = fields.Text(string='Medical History', tracking=True)
     emergency_contact = fields.Char(string='Emergency Contact', tracking=True)
     active = fields.Boolean(string='Active', default='True', tracking=True)

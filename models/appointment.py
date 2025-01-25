@@ -19,18 +19,22 @@ class HospitalAppointment(models.Model):
     ref = fields.Char(string='Reference', help="Reference from patient records.")
     prescription = fields.Html(string='Prescription', placeholder='Enter your prescription here .')
     pharmacy_lines_ids = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string='Pharmacy Lines' )
+    hide_sales_price = fields.Boolean(string='Hide sales price')
+
     priority = fields.Selection([
         ("0", "Normal"),
         ("1", "Low"),
         ("2", "High"),
         ("3", "Very high")
     ], string="Priority")
+
     state = fields.Selection([
         ("draft", "Draft"),
         ("in_consultation", "In Consultation"),
         ("done", "Done"),
         ("cancel", "Cancel")
     ], string="Status", default="draft", required=True)
+
     doctor_id = fields.Many2one('res.users', string='Doctor')
 
     # ---- single onchange in one function
@@ -75,8 +79,11 @@ class AppointmentPharmacyLines(models.Model):
     _description = 'Appointment Pharmacy lines'
 
     product_id = fields.Many2one('product.product', string='Product')
+
     price_unit = fields.Float(related='product_id.lst_price', string='Price')
+
     qty = fields.Integer(string='Quantity', default=1)
+
     # ttl_price = fields.Float(string='Total')
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
 
