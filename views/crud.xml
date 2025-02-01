@@ -1,0 +1,101 @@
+<odoo>
+    <template id="create">
+        <html>
+            <head>
+                <title>Crud Operation</title>
+            </head>
+            <body>
+                <h1>Create Product</h1>
+                <br/>
+                <form action="/crud/create/process" method="post" enctype="multipart/form-data">
+                    <div>Name</div>
+                    <input type="text" name="name"/>
+                    <br/>
+                    <br/>
+                    <div>Price</div>
+                    <input type="text" name="list_price"/>
+                    <br/>
+                    <br/>
+                    <div>Image</div>
+                    <input type="file" name="image_1920"/>
+                    <br/>
+                    <br/>
+                    <button type="submit">Create Product</button>
+                </form>
+            </body>
+        </html>
+    </template>
+
+    <template id="read_all">
+        <html>
+            <head>
+                <title>Crud Operation</title>
+            </head>
+            <body>
+                <h1>Product read all</h1>
+                <br/>
+                <br/>
+
+                <div t-foreach="products" t-as="product">
+                    <a t-att-href="'/crud/read?product_id=%d' % product.id ">
+                        <div class="d-flex">
+                            <div class="d-flex">
+                                <div>Name :</div>
+                                <p t-esc="product.name">_</p>
+                            </div>
+                            <br/>
+                            <br/>
+                        </div>
+                    </a>
+                </div>
+            </body>
+        </html>
+    </template>
+
+    <template id="read">
+        <html>
+            <head>
+                <title>Crud Operation</title>
+            </head>
+            <body>
+                <h1>Product read</h1>
+                <br/>
+                <br/>
+
+                <div t-foreach="product" t-as="product">
+                    <div>Name:</div>
+                    <div t-esc="product.name">_</div>
+                    <br/>
+                    <div>Price:</div>
+                    <div t-esc="product.list_price">_</div>
+                    <hr/>
+                </div>
+                <a t-att-href="'/crud/update?product_id=%d' % product.id">Edit Product</a>
+
+            </body>
+        </html>
+    </template>
+
+
+    <template id="update">
+        <html>
+
+            <head>
+                <title>Crud Operation</title>
+            </head>
+
+            <body>
+                <form t-att-action="'/crud/update/process?product_id=%d' % product.id" method="post">
+                    <h1>Product update</h1>
+                    <br/>
+                    <br/>
+
+                    <div>Name:</div>
+                    <input type="text" name="name" t-att-value="product.name"/>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </body>
+        </html>
+    </template>
+</odoo>
