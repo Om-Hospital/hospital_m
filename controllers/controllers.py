@@ -68,12 +68,13 @@ class MyModule(http.Controller):
 
         update_products = {
             'name': kw.get('name'),
-            'list_price': kw.get('list_price'),
+            'list_price': kw.get('list_price')
         }
 
         image_1920 = kw.get('image_1920')
         if image_1920:
             update_products['image_1920'] = base64.b64encode(image_1920.read()).decode('utf-8')
+
 
         product_id = kw.get('product_id')
         if product_id:
